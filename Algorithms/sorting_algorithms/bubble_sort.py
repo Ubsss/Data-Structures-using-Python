@@ -1,4 +1,4 @@
-array = [2,8,4,2,3,1,9,19,14]
+my_list = [4,3,1,2]
 
 # O(n^2)
 def bubble_sort(array):
@@ -10,4 +10,3 @@ def bubble_sort(array):
                 array[j+1] = temp
     return array
 
-print(bubble_sort(array))
