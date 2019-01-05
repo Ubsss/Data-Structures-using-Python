@@ -6,33 +6,34 @@
 array = [1,2,3,4,5]
 
 def rotate_right(nums, k):
+    my_nums = nums[:]
+    lens = len(nums)
 
-    size = len(nums)
-    numsB = nums[:]
+    for i in range(lens):
+        if (i + k) >= lens:
+            pos = (i + k) % lens
+            my_nums[pos] = nums[i]
+            print(pos)
+        if (i + k) < lens:
+            pos = (i + k)
+            my_nums[pos] = nums[i]
+    return my_nums
 
-    for i in range(len(numsB)):
-        if i+k >= size:
-            index = (i+k)%size
-        else:
-            index = i+k
+print(rotate_right(array,26))
 
-        nums[index] = numsB[i]
-
-    print(nums)
-
-def rotate_left(nums, k):
-    size = len(nums)
-    numsb = nums[:]
-
-    for i in range(len(numsb)):
-        if i - k <= 0:
-            index = abs((i-k)%size)
-        else:
-            index = i - k
-
-        nums[index] = numsb[i]
-
-    print(nums)
-
-rotate_left(array, 6)
+# def rotate_left(nums, k):
+#     size = len(nums)
+#     numsb = nums[:]
+#
+#     for i in range(len(numsb)):
+#         if i - k <= 0:
+#             index = abs((i-k)%size)
+#         else:
+#             index = i - k
+#
+#         nums[index] = numsb[i]
+#
+#     print(nums)
+#
+# rotate_left(array, 6)
 

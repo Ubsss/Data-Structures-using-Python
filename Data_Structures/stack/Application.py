@@ -1,5 +1,5 @@
 # from stack.Stack import Stack
-from stack.Stack_Using_Array import Stack
+from Data_Structures.stack.Stack_Using_Array import Stack
 
 myStack = Stack()
 

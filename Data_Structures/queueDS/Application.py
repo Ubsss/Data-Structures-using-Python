@@ -1,4 +1,4 @@
-from queue.Queue import Queue
+from Data_Structures.queueDS.QueueDS import Queue
 
 myQueue = Queue();
 

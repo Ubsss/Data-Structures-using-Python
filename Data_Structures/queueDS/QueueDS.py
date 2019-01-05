@@ -1,4 +1,4 @@
-from queue.Node import Node
+from Data_Structures.queueDS.Node import Node
 
 class Queue(object):
 
