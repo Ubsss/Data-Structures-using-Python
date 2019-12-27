@@ -1,59 +1,74 @@
-from Data_Structures.hashtables.Node import Node
+from Data_Structures.hashtables.Node import node
 
-class hash_table(object):
+class hash_table(node):
     def __init__(self):
-        self.capacity = 50
-        self.size = 0
-        self.buckets = [None] * self.capacity
+        self.capacity = 10
+        self.count = 0
+        self.buckets = [None]*self.capacity
 
     def hash(self, key):
-        hashsum = 0
+        hash_sum = 0
+        for char in range(len(key)):
+            hash_sum += ord(key[char])
+        hash_sum %= self.capacity
+        return hash_sum
 
-        # Enumerate provide an automatic counter, idx
-        for idx, c in enumerate(key):
-            # ord returns an int rep of a string
-            hashsum += (idx + len(key)) ** ord(c)
-            hashsum = hashsum % self.capacity
-        return hashsum
+    def insert(self, key, value):
+        new_node = node(key,value)
+        idx = self.hash(key)
 
-    def insert(self,key,value):
-        self.size += 1
-        index = self.hash(key)
-        node = self.buckets[index]
-        if node is None:
-            self.buckets[index] = Node(key, value)
-            return
-        prev = node
-        while node is not None:
-            prev = node
-            node = node.next
-        prev.next = Node(key, value)
+        if self.buckets[idx] == None:
+            self.buckets[idx] = new_node
+            self.count += 1
+            return True
+
+        new_node.next = self.buckets[idx]
+        self.buckets[idx] = new_node
+        self.count +=1
+        return True
 
     def find(self, key):
-        index = self.hash(key)
-        node = self.buckets[index]
-        while node is not None and node.key != key:
-            node = node.next
+        idx = self.hash(key)
 
-        if node is None:
-            return None
+        pointer = node(None,None)
+        pointer.next = self.buckets[idx]
+
+        while pointer.next != None:
+            if pointer.next.key == key:
+                return True
+            pointer.next = pointer.next.next
+
+        del pointer
+        return False
+
+    def delete(self, key):
+        idx = self.hash(key)
+
+        pointer = self.buckets[idx]
+        prev = None
+
+        while pointer != None and pointer.key != key:
+            prev = pointer
+            pointer = pointer.next
+
+        if pointer == None:
+            return False
         else:
-            return node.value
-
-    def remove(self,key):
-        index = self.hash(key)
-        node = self.buckets[index]
-
-        while node is not None and node.key != key:
-            prev = node
-            node = node.next
-        if node is None:
-            return None
-        else:
-            self.size -= 1
-            result = node.value
-            if prev is None:
-                node = None
+            if prev == None:
+                self.buckets[idx] = pointer.next
             else:
-                prev.next = prev.next.next
-            return result
+                prev.next = pointer.next
+                del pointer
+
+            self.count -= 1
+            return True
+
+    def print(self):
+        print("The HashTable contains " + str(self.count)+ " items: ")
+        pointer = node(None, None)
+        for i in range(self.capacity):
+            pointer.next = self.buckets[i]
+            while pointer.next != None:
+                print(str(i) + " -> " + str(pointer.next.key) + " , " + str(pointer.next.value))
+                pointer.next = pointer.next.next
+        del pointer

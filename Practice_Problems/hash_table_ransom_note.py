@@ -2,19 +2,16 @@
 magazine = ["give", "me", "one", "grand", "today", "night"]
 note = ["give", "one", "grand", "today"]
 
-
-# tc = O(n^2)
-# sc = O(1)
 def check_magazine(magazine, note):
-    count = 0
+    my_dict = {}
+    for i in magazine:
+        if i not in my_dict:
+            my_dict[i] = 0
+        my_dict[i] += 1
     for i in note:
-        for j in magazine:
-            if i == j:
-                count += 1
-                break
-    if count == len(note):
-        return "YES"
-    else:
-        return "NO"
+        if i not in magazine:
+            return "No"
+        magazine[j] -= 1
+    return "Yes"
 
-print(check_magazine(magazine, note))
+print(check_magazine(magazine,note))
